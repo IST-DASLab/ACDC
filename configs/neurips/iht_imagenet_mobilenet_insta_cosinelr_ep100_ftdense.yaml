@@ -1,0 +1,19 @@
+# Imagenet + MobileNetV1 with this config
+# use the hyperparameters from here: https://github.com/adityakusupati/STR/blob/master/configs/largescale/mobilenetv1-dense.yaml
+
+
+trainers:
+  # use this trainer name unless you want KD or other custom thing
+  default_trainer:
+    optimizer:
+      class: SGD
+      lr: 0.256
+      momentum: 0.875
+      weight_decay: 0.00003051757813
+
+    lr_scheduler:
+      class: CosineLR
+      warmup_length: 5
+      end_epoch: 100
+      epochs: [0, 1, 100]
+

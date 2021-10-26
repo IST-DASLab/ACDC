@@ -1,0 +1,66 @@
+# Imagenet + MobileNetV1 with this config
+# use the hyperparameters from here: https://github.com/adityakusupati/STR/blob/master/configs/largescale/mobilenetv1-dense.yaml
+
+pruners:
+  pruner_1:
+    class: UnstructuredMagnitudePruner
+    epochs: [10, 10, 71]
+    initial_sparsity: 0.9
+    target_sparsity: 0.9
+    weight_only: True
+    modules: [model.1.3, model.2.3, model.3.3, model.4.3, 
+              model.5.3, model.6.3, model.7.3, model.8.3, 
+              model.9.3, model.10.3, model.11.3, model.12.3, 
+              model.13.3, fc]
+    keep_pruned: False
+  
+  pruner_2:
+    class: UnstructuredMagnitudePruner
+    epochs: [85, 20, 100]
+    initial_sparsity: 0.9
+    target_sparsity: 0.9
+    weight_only: True
+    modules: [model.1.3, model.2.3, model.3.3, model.4.3,
+              model.5.3, model.6.3, model.7.3, model.8.3, 
+              model.9.3, model.10.3, model.11.3, model.12.3, 
+              model.13.3, fc]
+
+    keep_pruned: False
+
+
+recyclers:
+  recycler_1:
+    class: RestoreWeights
+    weight_only: True
+    epochs: [15, 10, 66] # [start, freq, end] for now (TODO: but can extend functionality?)
+    modules: [model.1.3, model.2.3, model.3.3, model.4.3,  
+              model.5.3, model.6.3, model.7.3, model.8.3, 
+              model.9.3, model.10.3, model.11.3, model.12.3,
+              model.13.3, fc]
+
+  
+  recycler_2:
+    class: RestoreWeights
+    weight_only: True
+    epochs: [75, 20, 86] # [start, freq, end] for now (TODO: but can extend functionality?)
+    modules: [model.1.3, model.2.3, model.3.3, model.4.3,
+              model.5.3, model.6.3, model.7.3, model.8.3, 
+              model.9.3, model.10.3, model.11.3, model.12.3, 
+              model.13.3, fc]
+
+
+trainers:
+  # use this trainer name unless you want KD or other custom thing
+  default_trainer:
+    optimizer:
+      class: SGD
+      lr: 0.256
+      momentum: 0.875
+      weight_decay: 0.00003051757813
+
+    lr_scheduler:
+      class: CosineLR
+      warmup_length: 5
+      end_epoch: 100
+      epochs: [0, 1, 100]
+

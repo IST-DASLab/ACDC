@@ -1,0 +1,91 @@
+# Imagenet + RESNET50 with this config
+# use the hyperparameters from here: https://github.com/adityakusupati/STR/blob/master/configs/largescale/resnet50-gmp.yaml
+
+pruners:
+  pruner_1:
+    class: MagnitudePruner
+    epochs: [10, 10, 171]
+    initial_sparsity: 0.95
+    target_sparsity: 0.95
+    weight_only: True
+    modules: [layer1.0.conv1, layer1.0.conv2, layer1.0.conv3, layer1.0.downsample.0, 
+              layer1.1.conv1, layer1.1.conv2, layer1.1.conv3, layer1.2.conv1, layer1.2.conv2,
+              layer1.2.conv3, layer2.0.conv1, layer2.0.conv2, layer2.0.conv3, layer2.0.downsample.0,
+              layer2.1.conv1, layer2.1.conv2, layer2.1.conv3, layer2.2.conv1, layer2.2.conv2,
+              layer2.2.conv3, layer2.3.conv1, layer2.3.conv2, layer2.3.conv3, layer3.0.conv1,
+              layer3.0.conv2, layer3.0.conv3, layer3.0.downsample.0, layer3.1.conv1, layer3.1.conv2,
+              layer3.1.conv3, layer3.2.conv1, layer3.2.conv2, layer3.2.conv3, layer3.3.conv1, 
+              layer3.3.conv2, layer3.3.conv3, layer3.4.conv1, layer3.4.conv2, layer3.4.conv3, 
+              layer3.5.conv1, layer3.5.conv2, layer3.5.conv3, layer4.0.conv1, layer4.0.conv2,
+              layer4.0.conv3, layer4.0.downsample.0, layer4.1.conv1, layer4.1.conv2, layer4.1.conv3,
+              layer4.2.conv1, layer4.2.conv2, layer4.2.conv3]
+    keep_pruned: False
+  
+  pruner_2:
+    class: MagnitudePruner
+    epochs: [185, 20, 200]
+    initial_sparsity: 0.95
+    target_sparsity: 0.95
+    weight_only: True
+    modules: [layer1.0.conv1, layer1.0.conv2, layer1.0.conv3, layer1.0.downsample.0, 
+              layer1.1.conv1, layer1.1.conv2, layer1.1.conv3, layer1.2.conv1, layer1.2.conv2,
+              layer1.2.conv3, layer2.0.conv1, layer2.0.conv2, layer2.0.conv3, layer2.0.downsample.0,
+              layer2.1.conv1, layer2.1.conv2, layer2.1.conv3, layer2.2.conv1, layer2.2.conv2,
+              layer2.2.conv3, layer2.3.conv1, layer2.3.conv2, layer2.3.conv3, layer3.0.conv1,
+              layer3.0.conv2, layer3.0.conv3, layer3.0.downsample.0, layer3.1.conv1, layer3.1.conv2,
+              layer3.1.conv3, layer3.2.conv1, layer3.2.conv2, layer3.2.conv3, layer3.3.conv1, 
+              layer3.3.conv2, layer3.3.conv3, layer3.4.conv1, layer3.4.conv2, layer3.4.conv3, 
+              layer3.5.conv1, layer3.5.conv2, layer3.5.conv3, layer4.0.conv1, layer4.0.conv2,
+              layer4.0.conv3, layer4.0.downsample.0, layer4.1.conv1, layer4.1.conv2, layer4.1.conv3,
+              layer4.2.conv1, layer4.2.conv2, layer4.2.conv3]
+    keep_pruned: False
+
+
+recyclers:
+  recycler_1:
+    class: RestoreWeights
+    weight_only: True
+    epochs: [15, 10, 166] # [start, freq, end] for now (TODO: but can extend functionality?)
+    modules: [layer1.0.conv1, layer1.0.conv2, layer1.0.conv3, layer1.0.downsample.0, 
+              layer1.1.conv1, layer1.1.conv2, layer1.1.conv3, layer1.2.conv1, layer1.2.conv2,
+              layer1.2.conv3, layer2.0.conv1, layer2.0.conv2, layer2.0.conv3, layer2.0.downsample.0,
+              layer2.1.conv1, layer2.1.conv2, layer2.1.conv3, layer2.2.conv1, layer2.2.conv2,
+              layer2.2.conv3, layer2.3.conv1, layer2.3.conv2, layer2.3.conv3, layer3.0.conv1,
+              layer3.0.conv2, layer3.0.conv3, layer3.0.downsample.0, layer3.1.conv1, layer3.1.conv2,
+              layer3.1.conv3, layer3.2.conv1, layer3.2.conv2, layer3.2.conv3, layer3.3.conv1, 
+              layer3.3.conv2, layer3.3.conv3, layer3.4.conv1, layer3.4.conv2, layer3.4.conv3, 
+              layer3.5.conv1, layer3.5.conv2, layer3.5.conv3, layer4.0.conv1, layer4.0.conv2,
+              layer4.0.conv3, layer4.0.downsample.0, layer4.1.conv1, layer4.1.conv2, layer4.1.conv3,
+              layer4.2.conv1, layer4.2.conv2, layer4.2.conv3]
+  recycler_2:
+    class: RestoreWeights
+    weight_only: True
+    epochs: [175, 20, 186] # [start, freq, end] for now (TODO: but can extend functionality?)
+    modules: [layer1.0.conv1, layer1.0.conv2, layer1.0.conv3, layer1.0.downsample.0, 
+              layer1.1.conv1, layer1.1.conv2, layer1.1.conv3, layer1.2.conv1, layer1.2.conv2,
+              layer1.2.conv3, layer2.0.conv1, layer2.0.conv2, layer2.0.conv3, layer2.0.downsample.0,
+              layer2.1.conv1, layer2.1.conv2, layer2.1.conv3, layer2.2.conv1, layer2.2.conv2,
+              layer2.2.conv3, layer2.3.conv1, layer2.3.conv2, layer2.3.conv3, layer3.0.conv1,
+              layer3.0.conv2, layer3.0.conv3, layer3.0.downsample.0, layer3.1.conv1, layer3.1.conv2,
+              layer3.1.conv3, layer3.2.conv1, layer3.2.conv2, layer3.2.conv3, layer3.3.conv1, 
+              layer3.3.conv2, layer3.3.conv3, layer3.4.conv1, layer3.4.conv2, layer3.4.conv3, 
+              layer3.5.conv1, layer3.5.conv2, layer3.5.conv3, layer4.0.conv1, layer4.0.conv2,
+              layer4.0.conv3, layer4.0.downsample.0, layer4.1.conv1, layer4.1.conv2, layer4.1.conv3,
+              layer4.2.conv1, layer4.2.conv2, layer4.2.conv3]
+
+
+trainers:
+  # use this trainer name unless you want KD or other custom thing
+  default_trainer:
+    optimizer:
+      class: SGD
+      lr: 0.256
+      momentum: 0.875
+      weight_decay: 0.00003051757813
+
+    lr_scheduler:
+      class: CosineLR
+      warmup_length: 5
+      end_epoch: 200
+      epochs: [0, 1, 200]
+
