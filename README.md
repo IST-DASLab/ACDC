@@ -5,11 +5,12 @@ This code allows replicating the image experiments of [**AC/DC: Alternating Comp
 The code is based on the open-source code for the WoodFisher neural network compression paper, which can be found on Github [here](http://github.com/IST-DASLab/WoodFisher "here").
 
 ### To Run:
-We recommend access to at least one GPU for running CIFAR-10 and CIFAR-100 training and at least 2-4 GPUs for running Imagenet training. We recommend Pytorch 1.8, and, if possible, wandb. If the latter is not possible, all code should be run with the `--use_wandb` flag **disabled**.
+We recommend access to at least one GPU for running CIFAR-10 and CIFAR-100 training and at least 2-4 GPUs for running Imagenet training. The ImageNet experiments were run using PyTorch 1.7.1, but the code was also tested using PyTorch 1.8. We recommend, if possible, using WandB for experiments tracking. Otherwise, all code should be run with the `--use_wandb` flag **disabled**.
 
-All requirements are listed in the `requirements.txt` file. Once they are installed, training for the appropriate dataset, architecture, and sparsity can be started by running the appropriate `.sh` file, which can be adjusted to give the correct GPU ids, output directories, and `--use_wandb` flag.
+All requirements are listed in the `requirements.txt` file. Once they are installed, training for the appropriate dataset, architecture, and sparsity can be started by running the appropriate `.sh` file, which can be adjusted to give the correct GPU ids, output directories, dataset path and `--use_wandb` flag.
 
-Please note that each shell script points to a configuration file, found in configs/neurips. These configuration files set the pruning and recycling schedule, as well as the learning rate and its schedule.
+Please note that each shell script points to a configuration file, found in configs/neurips. These configuration files set the pruning and recycling schedule, as well as the learning rate and its scheduler.
+
 
 ## Structure of the repo
 
