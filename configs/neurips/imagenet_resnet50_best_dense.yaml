@@ -1,0 +1,17 @@
+# Imagenet + RESNET50 with this config
+
+trainers:
+  # use this trainer name unless you want KD or other custom thing
+  default_trainer:
+    optimizer:
+      class: SGD
+      lr: 0.256
+      momentum: 0.875
+      weight_decay: 0.000030517578125
+
+    lr_scheduler:
+      class: CosineLR
+      warmup_length: 5
+      end_epoch: 100
+      epochs: [0, 1, 100]
+

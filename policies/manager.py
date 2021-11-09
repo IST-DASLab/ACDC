@@ -187,6 +187,9 @@ class Manager:
         self.setup_logging(args)
         self.schedule_prunes_and_recycles()
 
+        self.eval_only = args.eval_only
+        if self.eval_only and (args.from_checkpoint_path is None):
+            raise ValueError("Must provide a checkpoint for validation")
 
         if args.export_onnx is True:
             self.model = get_unwrapped_model(self.model)
@@ -361,6 +364,15 @@ class Manager:
     def run(self):
         train_loader = self.train_loader
         test_loader = self.test_loader
+        
+        # If the evaluation flag is enabled, then only compute the validation accuracy and exit the method
+        if self.eval_only:
+            trainer = self.trainers[0]
+            eval_loss, eval_correct = trainer.eval_model(self.test_loader, self.device, 100)
+            eval_acc = eval_correct / len(self.test_loader.dataset)
+            print(f'Validation loss: {eval_loss} \t Top-1 validation accuracy: {eval_acc}')
+            return 
+
         total_train_flops = 0
 
         self.training_progress = TrainingProgressTracker(self.initial_epoch,

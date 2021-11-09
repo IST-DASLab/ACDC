@@ -105,7 +105,8 @@ def get_parser():
         help='specifies path to *run_dir* from which the progress should be resumed')
     parser.add_argument('--only_model', action='store_true',
         help='if restore only the weight and not the whole run, e.g., opt and scheduler.')
-
+    parser.add_argument('--eval_only', action='store_true', help='only evaluate the model')
+    
     parser.add_argument('--export_onnx', action='store_true',
         help='export onnx.')
     parser.add_argument('--onnx_nick', type=str, default=None, help='name for onnx file')
